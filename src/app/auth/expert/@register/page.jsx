@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import PostExpertRegister from "@/utils/auth/ExpertRegister";
-// import useAuth from "@/hooks/useAuth";
+import PostExpertLogin from "@/utils/auth/ExpertLogin";
+import useAuth from "@/hooks/useAuth";
 
 export default function ExpertRegister() {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,25 +17,39 @@ export default function ExpertRegister() {
   const [address, setAddress] = useState("walid23");
   const [city, setCity] = useState("");
 
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await PostExpertRegister(
+      const registerResponse = await PostExpertRegister(
         firstname,
         lastname,
         userName,
         password,
-        phoneNumber,
+        phoneNumber.toString(),
         address,
-        city
+        parseInt(city)
       );
-      // login(response);
-      console.log(response);
+
+      if (registerResponse) {
+        console.log("Registered Successfuly");
+
+        const loginResponse = await PostExpertLogin(userName, password);
+        login(loginResponse);
+        console.log("Login Response " + loginResponse);
+      } else {
+        throw new error("Unkonw Error");
+      }
     } catch (error) {
       if (error.message === "User not found") {
         console.log("Invalid username or password");
@@ -158,7 +173,7 @@ export default function ExpertRegister() {
             <option value="24">25 - Constantine</option>
             <option value="25">26 - Médéa</option>
             <option value="26">27 - Mostaganem</option>
-            <option value="27">28 - M'Sila</option>
+            <option value="27">28 - M&apos;Sila</option>
             <option value="28">29 - Mascara</option>
             <option value="29">30 - Ouargla</option>
             <option value="30">31 - Oran</option>
@@ -179,7 +194,7 @@ export default function ExpertRegister() {
             <option value="45">46 - Aïn Témouchent</option>
             <option value="46">47 - Ghardaïa</option>
             <option value="47">48 - Relizane</option>
-            <option value="48">49 - El M'ghair</option>
+            <option value="48">49 - El M&apos;ghair</option>
             <option value="49">50 - El Menia</option>
             <option value="50">51 - Ouled Djellal</option>
             <option value="51">52 - Bordj Baji Mokhtar</option>

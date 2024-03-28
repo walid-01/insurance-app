@@ -1,27 +1,30 @@
-import { useState } from "react";
 import jwt from "jsonwebtoken";
 
-export default function useAuth() {
-  const [token, setToken] = useState(null);
+export default function useAuth(userContext) {
+  const login = (data) => {
+    const { setUser } = userContext;
 
-  const login = (receivedToken) => {
-    // Save the token in cookie
-    setToken(receivedToken);
-
-    const decodedToken = jwt.decode(receivedToken);
+    const { token, firstName, lastName, role, address, phoneNumber, city } =
+      data;
+    const decodedToken = jwt.decode(token);
 
     const date = new Date();
     date.setTime(decodedToken.exp * 1000);
     const expires = "expires=" + date;
-    document.cookie = `token=${receivedToken}; ${expires}; path=/`;
+    document.cookie = `token=${token}; ${expires}; path=/`;
+
+    setUser({ firstName, lastName, role, address, phoneNumber, city });
   };
 
   const logout = () => {
+    const { setUser } = userContext;
     // Clear the token from state and cookie
     console.log("Logging Out...");
-    setToken(null);
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setUser(null);
   };
 
-  return { token, login, logout };
+  // const getToken = () => {};
+
+  return { login, logout };
 }

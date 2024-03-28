@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PostExpertLogin from "@/utils/auth/ExpertLogin";
 import useAuth from "@/hooks/useAuth";
+import { UserContext } from "@/context/UserContext";
 
 export default function ExpertLogin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,8 @@ export default function ExpertLogin() {
   const [userName, setUserName] = useState("lid");
   const [password, setPassword] = useState("walid23");
 
-  const { login } = useAuth();
+  const userContext = useContext(UserContext);
+  const { login } = useAuth(userContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,8 @@ export default function ExpertLogin() {
 
     try {
       const response = await PostExpertLogin(userName, password);
+      // console.log(response);
       login(response);
-      console.log(response);
     } catch (error) {
       if (error.message === "User not found") {
         console.log("Invalid username or password");

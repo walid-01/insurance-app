@@ -1,4 +1,4 @@
-async function PostExpertLogin(userName, password) {
+const PostExpertLogin = async (userName, password) => {
   try {
     const response = await fetch("http://localhost:5047/Expert-Login", {
       method: "POST",
@@ -9,9 +9,8 @@ async function PostExpertLogin(userName, password) {
     });
 
     if (response.ok) {
-      const { token } = await response.json();
-      console.log(token);
-      return token;
+      const data = await response.json();
+      return data;
     } else if (response.status === 401) {
       throw new Error("User not found");
     } else {
@@ -20,6 +19,6 @@ async function PostExpertLogin(userName, password) {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 export default PostExpertLogin;

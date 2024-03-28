@@ -8,6 +8,15 @@ async function PostExpertRegister(
   city
 ) {
   try {
+    // console.log({
+    //   firstname,
+    //   lastname,
+    //   userName,
+    //   password,
+    //   phoneNumber,
+    //   address,
+    //   city,
+    // });
     const response = await fetch("http://localhost:5047/Expert-Register", {
       method: "POST",
       headers: {
@@ -24,10 +33,11 @@ async function PostExpertRegister(
       }),
     });
 
-    if (response.ok) {
-      const { token } = await response.json();
-      console.log(token);
-      return token;
+    if (response.status === 204) {
+      // const { token } = await response.json();
+      console.log(response);
+
+      return true;
     } else if (response.status === 401) {
       throw new Error(response.text);
     } else {
