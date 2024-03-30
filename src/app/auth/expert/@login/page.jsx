@@ -22,11 +22,13 @@ export default function ExpertLogin() {
       const response = await PostExpertLogin(userName, password);
       // console.log(response);
       login(response);
-    } catch (error) {
-      if (error.message === "User not found") {
+    } catch (err) {
+      if (err.message === "User not found") {
         console.log("Invalid username or password");
+        setError("Invalid username or password");
       } else {
-        console.log("Unkown login error:", error);
+        console.log("Unkown login error:", err);
+        setError("Unkown login error:" + err);
       }
     } finally {
       setIsLoading(false);

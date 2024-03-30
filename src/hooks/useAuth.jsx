@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken";
 
 export default function useAuth(userContext) {
-  const login = (data) => {
+  const login = (response) => {
     const { setUser } = userContext;
 
     const { token, firstName, lastName, role, address, phoneNumber, city } =
-      data;
-    const decodedToken = jwt.decode(token);
+      response;
 
+    const decodedToken = jwt.decode(token);
     const date = new Date();
     date.setTime(decodedToken.exp * 1000);
+
     const expires = "expires=" + date;
     document.cookie = `token=${token}; ${expires}; path=/`;
 

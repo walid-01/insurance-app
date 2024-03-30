@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+// import useGuestOnly from "@/hooks/useGuestOnly";
 
 export default function Home() {
+  // useGuestOnly();
   return (
     <div>
       <button>
