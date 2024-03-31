@@ -1,8 +1,7 @@
 "use client";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import PostExpertLogin from "@/utils/auth/ExpertLogin";
 import useAuth from "@/hooks/useAuth";
-import { UserContext } from "@/context/UserContext";
 
 export default function ExpertLogin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,8 +9,15 @@ export default function ExpertLogin() {
   const [userName, setUserName] = useState("lid");
   const [password, setPassword] = useState("walid23");
 
-  const userContext = useContext(UserContext);
-  const { login } = useAuth(userContext);
+  const { login } = useAuth();
+
+  // useEffect(() => {
+  //   console.log("Use Effect is running..., User: ", user);
+  //   // Redirect if user is already authenticated
+  //   if (user) {
+  //     redirect("/expert");
+  //   }
+  // }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

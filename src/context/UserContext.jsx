@@ -18,8 +18,9 @@ export default function UserProvider({ children }) {
       const tokenValue = token.split("=")[1];
 
       // Fetch Expert data using the fetchExpertData function
-      const expertData = await fetchExpertData(tokenValue);
-      setUser(expertData); // Set the fetched user data in the state
+      const { address, city, firstName, lastName, phoneNumber, role } =
+        await fetchExpertData(tokenValue);
+      setUser({ address, city, firstName, lastName, phoneNumber, role }); // Set the fetched user data in the state
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -30,8 +31,13 @@ export default function UserProvider({ children }) {
     fetchUserData();
   }, []); // Empty dependency array to run this effect only once, when the component mounts
 
+  useEffect(() => {
+    // Log the user state whenever it changes
+    console.log("User state updated:", user);
+  }, [user]);
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, fetchUserData }}>
       {children}
     </UserContext.Provider>
   );

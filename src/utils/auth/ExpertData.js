@@ -14,7 +14,7 @@ const fetchExpertData = async (tokenValue) => {
     if (response.ok) {
       // Parse the JSON response
       const expertData = await response.json();
-      console.log(expertData);
+
       return expertData; // Return the fetched Expert data
     } else {
       // Handle the error if the response is not successful

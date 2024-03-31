@@ -1,11 +1,17 @@
 import jwt from "jsonwebtoken";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
-export default function useAuth(userContext) {
+export default function useAuth() {
+  const userContext = useContext(UserContext);
+
   const login = (response) => {
-    const { setUser } = userContext;
+    const { fetchUserData } = userContext;
 
-    const { token, firstName, lastName, role, address, phoneNumber, city } =
-      response;
+    // const { token, firstName, lastName, role, address, phoneNumber, city } =
+    //   response;
+
+    const { token } = response;
 
     const decodedToken = jwt.decode(token);
     const date = new Date();
@@ -14,15 +20,19 @@ export default function useAuth(userContext) {
     const expires = "expires=" + date;
     document.cookie = `token=${token}; ${expires}; path=/`;
 
-    setUser({ firstName, lastName, role, address, phoneNumber, city });
+    fetchUserData();
+    // setUser({ firstName, lastName, role, address, phoneNumber, city });
   };
 
   const logout = () => {
-    const { setUser } = userContext;
-    // Clear the token from state and cookie
+    const { fetchUserData } = userContext;
+
+    // Clear the token from cookie
     console.log("Logging Out...");
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    setUser(null);
+
+    fetchUserData();
+    // setUser(null);
   };
 
   // const getToken = () => {};
