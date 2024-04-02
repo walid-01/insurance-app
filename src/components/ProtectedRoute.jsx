@@ -11,15 +11,9 @@ export default function ProtectedRoute({ children, requiredRole }) {
 
   useLayoutEffect(() => {
     const role = getRole();
-    if (requiredRole === "none" && role) {
-      redirect(`/${role}`);
-    } else if (requiredRole === "expert") {
-      if (!role) redirect("/auth/expert");
-      else if (role === "insurance") redirect("/insurance");
-    } else if (requiredRole === "insurance") {
-      if (!role) redirect("/auth/insurance");
-      else if (role === "expert") redirect("/expert");
-    }
+    if (requiredRole && !role) redirect(`/auth/${requiredRole}`);
+    else if (requiredRole === null && role) redirect(`/${role}`);
+    else if (role && role !== requiredRole) redirect("/" + role);
   }, [user]);
   return children;
 }

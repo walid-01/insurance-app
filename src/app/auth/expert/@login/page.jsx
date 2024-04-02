@@ -9,7 +9,7 @@ export default function ExpertLogin() {
   const [userName, setUserName] = useState("walid");
   const [password, setPassword] = useState("walid23");
 
-  const { login } = useAuth();
+  const { expertLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ export default function ExpertLogin() {
     setError(null);
 
     try {
-      const result = await login(userName, password);
+      const result = await expertLogin(userName, password);
       console.log(result);
       setError(result);
     } catch (err) {

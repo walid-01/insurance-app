@@ -15,7 +15,7 @@ export default function ExpertRegister() {
   const [address, setAddress] = useState("walid23");
   const [city, setCity] = useState("");
 
-  const { register } = useAuth();
+  const { expertRegister } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ export default function ExpertRegister() {
     }
 
     try {
-      const registerResponse = await register(
+      const registerResponse = await expertRegister(
         firstname,
         lastname,
         userName,
@@ -40,6 +40,7 @@ export default function ExpertRegister() {
       );
 
       console.log(registerResponse);
+      setError(registerResponse);
     } catch (error) {
       console.log("Unkown login error:", error);
     } finally {
@@ -97,7 +98,7 @@ export default function ExpertRegister() {
             required
             type="password"
             id="RegisterConfirmPassword"
-            value={password}
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
