@@ -1,15 +1,13 @@
 "use client";
 import { useState } from "react";
-import PostExpertRegister from "@/utils/auth/ExpertRegister";
-import PostExpertLogin from "@/utils/auth/ExpertLogin";
 import useAuth from "@/hooks/useAuth";
 
 export default function ExpertRegister() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("wa");
+  const [lastname, setLastname] = useState("lid");
   const [userName, setUserName] = useState("walid");
   const [password, setPassword] = useState("walid23");
   const [confirmPassword, setConfirmPassword] = useState("walid23");
@@ -17,7 +15,7 @@ export default function ExpertRegister() {
   const [address, setAddress] = useState("walid23");
   const [city, setCity] = useState("");
 
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +29,7 @@ export default function ExpertRegister() {
     }
 
     try {
-      const registerResponse = await PostExpertRegister(
+      const registerResponse = await register(
         firstname,
         lastname,
         userName,
@@ -41,21 +39,9 @@ export default function ExpertRegister() {
         parseInt(city)
       );
 
-      if (registerResponse) {
-        console.log("Registered Successfuly");
-
-        const loginResponse = await PostExpertLogin(userName, password);
-        login(loginResponse);
-        console.log("Login Response " + loginResponse);
-      } else {
-        throw new error("Unkonw Error");
-      }
+      console.log(registerResponse);
     } catch (error) {
-      if (error.message === "User not found") {
-        console.log("Invalid username or password");
-      } else {
-        console.log("Unkown login error:", error);
-      }
+      console.log("Unkown login error:", error);
     } finally {
       setIsLoading(false);
     }

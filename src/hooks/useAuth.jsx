@@ -4,38 +4,90 @@ import { UserContext } from "@/context/UserContext";
 
 export default function useAuth() {
   const userContext = useContext(UserContext);
+  const { fetchUserData } = userContext;
 
-  const login = (response) => {
-    const { fetchUserData } = userContext;
+  const login = async (userName, password) => {
+    try {
+      const response = await fetch("http://localhost:5047/Expert-Login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userName, password }),
+      });
 
-    // const { token, firstName, lastName, role, address, phoneNumber, city } =
-    //   response;
+      if (!response.status === 401) {
+        return "User not found";
+      }
 
-    const { token } = response;
+      const data = await response.json();
+      const date = new Date();
 
-    const decodedToken = jwt.decode(token);
-    const date = new Date();
-    date.setTime(decodedToken.exp * 1000);
+      date.setTime(jwt.decode(data.token).exp * 1000);
 
-    const expires = "expires=" + date;
-    document.cookie = `token=${token}; ${expires}; path=/`;
+      document.cookie = `token=${data.token}; expires=${date}; path=/`;
 
-    fetchUserData();
-    // setUser({ firstName, lastName, role, address, phoneNumber, city });
+      fetchUserData();
+      return "Logged In";
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const logout = () => {
-    const { fetchUserData } = userContext;
-
     // Clear the token from cookie
-    console.log("Logging Out...");
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
     fetchUserData();
-    // setUser(null);
   };
 
-  // const getToken = () => {};
+  const register = async (
+    firstname,
+    lastname,
+    userName,
+    password,
+    phoneNumber,
+    address,
+    city
+  ) => {
+    // console.log({
+    //   firstname,
+    //   lastname,
+    //   userName,
+    //   password,
+    //   phoneNumber,
+    //   address,
+    //   city,
+    // });
 
-  return { login, logout };
+    try {
+      const response = await fetch("http://localhost:5047/Expert-Register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          userName,
+          password,
+          phoneNumber,
+          address,
+          city,
+        }),
+      });
+
+      if (response.status === 204) {
+        console.log(response);
+        login(userName, password);
+
+        return "Registred";
+      } else if (response.status === 409) {
+        return "Username taken";
+      } else return "Uknown Error";
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return { login, logout, register };
 }

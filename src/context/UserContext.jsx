@@ -1,28 +1,24 @@
 "use client";
 import { createContext, useState, useEffect } from "react";
-import fetchExpertData from "@/utils/auth/ExpertData";
+import getUserData from "@/utils/auth/getUserData";
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isUserLoading, setIsUserLoading] = useState(true);
+
   const fetchUserData = async () => {
     try {
-      const token = document.cookie
-        .split(";")
-        .find((cookie) => cookie.trim().startsWith("token="));
-      if (!token) {
-        console.log("No token found in cookies. User not logged in.");
-        return; // Exit early if no token found
-      }
-      const tokenValue = token.split("=")[1];
+      setIsUserLoading(true);
 
-      // Fetch Expert data using the fetchExpertData function
-      const { address, city, firstName, lastName, phoneNumber, role } =
-        await fetchExpertData(tokenValue);
-      setUser({ address, city, firstName, lastName, phoneNumber, role }); // Set the fetched user data in the state
+      const user = await getUserData();
+      setUser(user); // Set the fetched user data in the state
+
+      setIsUserLoading(false);
     } catch (error) {
       console.error("Error fetching user data:", error);
+      setIsUserLoading(false);
     }
   };
 
@@ -31,13 +27,20 @@ export default function UserProvider({ children }) {
     fetchUserData();
   }, []); // Empty dependency array to run this effect only once, when the component mounts
 
+  // For test only
   useEffect(() => {
     // Log the user state whenever it changes
     console.log("User state updated:", user);
   }, [user]);
 
+  // For test only
+  useEffect(() => {
+    // Log the user state whenever it changes
+    console.log("User is loading changed to: ", isUserLoading);
+  }, [isUserLoading]);
+
   return (
-    <UserContext.Provider value={{ user, fetchUserData }}>
+    <UserContext.Provider value={{ user, isUserLoading, fetchUserData }}>
       {children}
     </UserContext.Provider>
   );

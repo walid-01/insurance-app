@@ -1,23 +1,15 @@
 "use client";
+
 import { useState } from "react";
-import PostExpertLogin from "@/utils/auth/ExpertLogin";
 import useAuth from "@/hooks/useAuth";
 
 export default function ExpertLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userName, setUserName] = useState("lid");
+  const [userName, setUserName] = useState("walid");
   const [password, setPassword] = useState("walid23");
 
   const { login } = useAuth();
-
-  // useEffect(() => {
-  //   console.log("Use Effect is running..., User: ", user);
-  //   // Redirect if user is already authenticated
-  //   if (user) {
-  //     redirect("/expert");
-  //   }
-  // }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,17 +17,12 @@ export default function ExpertLogin() {
     setError(null);
 
     try {
-      const response = await PostExpertLogin(userName, password);
-      // console.log(response);
-      login(response);
+      const result = await login(userName, password);
+      console.log(result);
+      setError(result);
     } catch (err) {
-      if (err.message === "User not found") {
-        console.log("Invalid username or password");
-        setError("Invalid username or password");
-      } else {
-        console.log("Unkown login error:", err);
-        setError("Unkown login error:" + err);
-      }
+      console.log("Unkown login error:", err);
+      setError("Unkown login error:" + err);
     } finally {
       setIsLoading(false);
     }
