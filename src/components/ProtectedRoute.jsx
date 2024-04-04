@@ -12,8 +12,14 @@ export default function ProtectedRoute({ children, requiredRole }) {
   useLayoutEffect(() => {
     const role = getRole();
     if (requiredRole && !role) redirect(`/auth/${requiredRole}`);
-    else if (requiredRole === null && role) redirect(`/${role}`);
+    else if (requiredRole === null && role) redirect("/" + role);
     else if (role && role !== requiredRole) redirect("/" + role);
   }, [user]);
+
+  if (requiredRole && requiredRole !== user?.role) {
+    // Redirect using router.push on client-side
+    return null; // Prevent rendering children
+  }
+
   return children;
 }

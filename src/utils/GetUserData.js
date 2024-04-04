@@ -8,8 +8,6 @@ const getUserData = async () => {
 
     if (!token || !role) return; // Exit early if no token or problem with role
 
-    console.log(role);
-
     // Make the API call to fetch User data
     const response = await fetch(`http://localhost:5047/${role}`, {
       method: "GET",

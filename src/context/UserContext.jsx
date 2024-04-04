@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState, useEffect } from "react";
-import getUserData from "@/utils/auth/getUserData";
+import getUserData from "@/utils/GetUserData";
 
 export const UserContext = createContext();
 
