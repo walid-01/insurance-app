@@ -6,6 +6,8 @@ const editProfile = async (data) => {
     const role = getRole();
     const token = getToken();
 
+    console.log(data);
+
     const response = await fetch(`http://localhost:5047/${role}`, {
       method: "PUT",
       headers: {
