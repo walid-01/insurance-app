@@ -2,13 +2,13 @@ import useToken from "@/hooks/useToken";
 
 const getOrders = async () => {
   try {
-    const { token } = useToken;
+    const { getToken } = useToken();
     const response = await fetch(`http://localhost:5047/ServiceOrder`, {
       method: "GET",
       headers: {
         // Include the token in the request headers
         "Content-Type": "application/json",
-        userToken: token,
+        userToken: getToken(),
       },
     });
     // Check if the response is successful

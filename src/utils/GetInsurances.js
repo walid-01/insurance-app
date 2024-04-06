@@ -1,14 +1,10 @@
-import useToken from "@/hooks/useToken";
-
 const getInsurances = async () => {
   try {
-    const { token } = useToken;
     const response = await fetch(`http://localhost:5047/InsurancesList`, {
       method: "GET",
       headers: {
         // Include the token in the request headers
         "Content-Type": "application/json",
-        token,
       },
     });
     // Check if the response is successful
