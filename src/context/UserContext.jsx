@@ -1,10 +1,12 @@
 "use client";
 import { createContext, useState, useEffect } from "react";
-import getUserData from "@/utils/GetUserData";
+import useUser from "@/hooks/useUser";
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
+  const { getUserData } = useUser();
+
   const [user, setUser] = useState(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
 

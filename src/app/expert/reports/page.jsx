@@ -1,9 +1,11 @@
 "use client";
 
-import getOrders from "@/utils/GetOrders";
+import useServiceOrder from "@/hooks/useServiceOrder";
 import { useState, useEffect } from "react";
 
 export default function Reports() {
+  const { getOrders } = useServiceOrder();
+
   const [orders, setOrders] = useState({});
   useEffect(() => {
     loadOrders();

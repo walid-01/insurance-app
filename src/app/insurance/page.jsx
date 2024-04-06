@@ -5,7 +5,7 @@ import { useContext } from "react";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 
-export default function insurance() {
+export default function Insurance() {
   const userContext = useContext(UserContext);
   const { logout } = useAuth(userContext);
   return (

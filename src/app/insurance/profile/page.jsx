@@ -2,9 +2,11 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import CitySelect from "@/components/CitySelect";
-import editProfile from "@/utils/EditProfile";
+import useUser from "@/hooks/useUser";
 
 export default function EditProfile() {
+  const { editProfile } = useUser();
+
   const userContext = useContext(UserContext);
   const { user, fetchUserData } = userContext;
 
