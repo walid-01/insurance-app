@@ -29,6 +29,34 @@ export default function useServiceOrder() {
     }
   };
 
+  const getOrderById = async (orderId) => {
+    try {
+      const response = await fetch(`http://localhost:5047/ServiceOrderById`, {
+        method: "GET",
+        headers: {
+          // Include the token in the request headers
+          "Content-Type": "application/json",
+          userToken: token,
+          id: orderId,
+        },
+      });
+      // Check if the response is successful
+      if (response.ok) {
+        // Parse the JSON response
+        const orders = await response.json();
+        // console.log(orders);
+        return orders;
+      } else if (response.status === 404) {
+        return response.status;
+      } else {
+        throw new Error(`An error occurred ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error; // Re-throw the error to be handled by the caller
+    }
+  };
+
   const submitOrder = async (order) => {
     try {
       console.log({ ...order, victimInsuranceToken: token });
@@ -54,5 +82,30 @@ export default function useServiceOrder() {
     }
   };
 
-  return { getOrders, submitOrder };
+  const submitExpertiseReport = async (expertiseReport) => {
+    try {
+      console.log({ ...expertiseReport, expertToken: token });
+
+      const response = await fetch(`http://localhost:5047/ExpertiseReport`, {
+        method: "POST",
+        headers: {
+          // Include the token in the request headers
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...expertiseReport, expertToken: token }),
+      });
+
+      // Check if the response is successful
+      if (response.ok) {
+        return true;
+      } else {
+        throw new Error(`An error occurred ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error submiting service expertiseReport data:", error);
+      throw error; // Re-throw the error to be handled by the caller
+    }
+  };
+
+  return { getOrders, submitOrder, getOrderById, submitExpertiseReport };
 }

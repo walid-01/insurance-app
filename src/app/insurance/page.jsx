@@ -17,6 +17,8 @@ export default function Insurance() {
         Create a new service order
       </Link>
       <br />
+      <Link href="/insurance/reports">reports</Link>
+      <br />
       <button onClick={() => logout()}>Log Out</button>
     </div>
   );

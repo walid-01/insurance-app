@@ -19,7 +19,13 @@ export default function UserProvider({ children }) {
 
       setIsUserLoading(false);
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      if (error.message === "User not found") {
+        console.log("Error: Invalid Token, logging out...");
+        document.cookie =
+          "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        return fetchUserData();
+      }
+      console.error("Unhandled error: ", error);
       setIsUserLoading(false);
     }
   };
