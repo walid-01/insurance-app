@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import useUser from "@/hooks/useUser";
 
-export default function EditProfile() {
+export default function ExpertEditProfile() {
   const { editProfile } = useUser();
 
   const userContext = useContext(UserContext);

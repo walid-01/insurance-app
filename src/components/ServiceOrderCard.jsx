@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 
-export default function ServiceOrderCard({ order }) {
+export default function ServiceOrderCard({ order, role }) {
   return (
-    <Link href={`/expert/reports/${order.id}`}>
+    <Link href={`/${role}/reports/${order.id}`}>
       <div>
         <p>{order.vehicleMakerAndModel}</p>
         <p>{order.victimInsurance.name}</p>

@@ -22,7 +22,7 @@ function ExpertiseReportForm({ serviceOrderId }) {
       partName: "",
       partPrice: 0,
       reduction: 0,
-      expertiseReportID: 0,
+      isRepairable: false,
     },
   ]);
 
@@ -183,6 +183,18 @@ function ExpertiseReportForm({ serviceOrderId }) {
               }
               placeholder="Reduction"
             />
+            <input
+              type="checkbox"
+              checked={part.isRepairable}
+              onChange={(e) =>
+                setDamagedParts((prevParts) =>
+                  prevParts.map((p, i) =>
+                    i === index ? { ...p, isRepairable: e.target.checked } : p
+                  )
+                )
+              }
+            />
+            <label htmlFor="isRepairable">Is Repairable?</label>
             {index > 0 && ( // Only show the "Remove" button for parts other than the first one
               <button
                 type="button"

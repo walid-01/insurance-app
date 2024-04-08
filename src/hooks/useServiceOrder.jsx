@@ -107,5 +107,41 @@ export default function useServiceOrder() {
     }
   };
 
-  return { getOrders, submitOrder, getOrderById, submitExpertiseReport };
+  const reportRespond = async (expertiseReportID, isAccepted) => {
+    try {
+      // console.log({ expertiseReportID, insuranceToken: token, isAccepted });
+
+      const response = await fetch(
+        `http://localhost:5047/${isAccepted ? "Accept" : "Reject"}`,
+        {
+          method: "PUT",
+          headers: {
+            // Include the token in the request headers
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ expertiseReportID, insuranceToken: token }),
+        }
+      );
+
+      console.log(response);
+
+      // Check if the response is successful
+      if (response.ok) {
+        return true;
+      } else {
+        throw new Error(`An error occurred ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error submitting service order data:", error);
+      throw error; // Re-throw the error to be handled by the caller
+    }
+  };
+
+  return {
+    getOrders,
+    submitOrder,
+    getOrderById,
+    submitExpertiseReport,
+    reportRespond,
+  };
 }
