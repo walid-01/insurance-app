@@ -1,8 +1,10 @@
 import useServiceOrder from "@/hooks/useServiceOrder";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function ExpertiseReportForm({ serviceOrderId }) {
   const { submitExpertiseReport } = useServiceOrder();
+  const router = useRouter();
 
   const [error, setError] = useState(null);
 
@@ -69,6 +71,10 @@ function ExpertiseReportForm({ serviceOrderId }) {
 
     const response = await submitExpertiseReport(reportData);
     console.log(response);
+    if (response) {
+      // Check for successful response
+      router.push(`/expert/reports`);
+    }
   };
 
   return (
