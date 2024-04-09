@@ -1,12 +1,14 @@
 import useServiceOrder from "@/hooks/useServiceOrder";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 function ExpertiseReportForm({ serviceOrderId }) {
   const { submitExpertiseReport } = useServiceOrder();
   const router = useRouter();
 
   const [error, setError] = useState(null);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
   const [reference, setReference] = useState("");
   const [incident, setIncident] = useState("");
@@ -55,18 +57,14 @@ function ExpertiseReportForm({ serviceOrderId }) {
       return;
     }
 
+    setIsConfirmationOpen(true); // Open the confirmation popup before submitting
+  };
+
+  const handleConfirm = async () => {
+    setIsConfirmationOpen(false); // Close the popup after confirmation
+
     const reportData = {
-      reference,
-      incident,
-      incidentDate,
-      vehicleConditionBeforeIncident,
-      impactPoint,
-      damagedPoint,
-      paintAndAdditions,
-      laborDescription,
-      laborCost,
-      serviceOrderId,
-      damagedParts,
+      // ... (report data definition) ...
     };
 
     const response = await submitExpertiseReport(reportData);
@@ -75,6 +73,10 @@ function ExpertiseReportForm({ serviceOrderId }) {
       // Check for successful response
       router.push(`/expert/reports`);
     }
+  };
+
+  const handleCancel = () => {
+    setIsConfirmationOpen(false); // Close the popup on cancel
   };
 
   return (
@@ -219,6 +221,13 @@ function ExpertiseReportForm({ serviceOrderId }) {
         <button type="submit">Create Report</button>
       </form>
       {error && <p className="text-red-600">{error}</p>}
+      {isConfirmationOpen && (
+        <ConfirmationPopup
+          message="Are you sure you want to create the report?"
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </>
   );
 }
