@@ -1,6 +1,6 @@
 import React from "react";
 
-const CitySelect = ({ city, setCity, isDisabled = false }) => {
+const CitySelect = ({ city, setCity, isDisabled = false, className = "" }) => {
   return (
     <select
       disabled={isDisabled}
@@ -8,6 +8,7 @@ const CitySelect = ({ city, setCity, isDisabled = false }) => {
       id="city"
       value={city}
       onChange={(e) => setCity(e.target.value)}
+      className={className}
     >
       <option value="" disabled>
         Select a city

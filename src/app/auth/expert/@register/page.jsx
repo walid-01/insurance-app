@@ -53,31 +53,33 @@ export default function ExpertRegister() {
     <>
       <h1 className="text-2xl font-semibold text-center mb-4">Register</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col">
-          <label htmlFor="RegisterFirstname" className="text-sm font-medium">
-            Firstname:
-          </label>
-          <input
-            required
-            type="text"
-            id="RegisterFirstname"
-            value={firstname}
-            onChange={(e) => setFirstname(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterLastname" className="text-sm font-medium">
-            Lastname:
-          </label>
-          <input
-            required
-            type="text"
-            id="RegisterLastname"
-            value={lastname}
-            onChange={(e) => setLastname(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-          />
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <label htmlFor="RegisterFirstname" className="text-sm font-medium">
+              Firstname:
+            </label>
+            <input
+              required
+              type="text"
+              id="RegisterFirstname"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="RegisterLastname" className="text-sm font-medium">
+              Lastname:
+            </label>
+            <input
+              required
+              type="text"
+              id="RegisterLastname"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            />
+          </div>
         </div>
         <div className="flex flex-col">
           <label htmlFor="RegisterUserName" className="text-sm font-medium">
@@ -134,24 +136,30 @@ export default function ExpertRegister() {
             className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterAddress" className="text-sm font-medium">
-            Address:
-          </label>
-          <input
-            required
-            type="text"
-            id="RegisterAddress"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterCity" className="text-sm font-medium">
-            City:
-          </label>
-          <CitySelect city={city} setCity={setCity} />
+        <div className="flex gap-3">
+          <div className="w-4/6 flex flex-col">
+            <label htmlFor="RegisterAddress" className="text-sm font-medium">
+              Address:
+            </label>
+            <input
+              required
+              type="text"
+              id="RegisterAddress"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            />
+          </div>
+          <div className="flex flex-col w-2/6">
+            <label htmlFor="RegisterCity" className="text-sm font-medium">
+              City:
+            </label>
+            <CitySelect
+              city={city}
+              setCity={setCity}
+              className="px-3 py-2 rounded-md border border-gray-300"
+            />
+          </div>
         </div>
         <button
           type="submit"

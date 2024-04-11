@@ -56,7 +56,7 @@ export default function Home() {
           <p className="text-gray-700 mb-6">
             The process is simple and efficient:
           </p>
-          <ol className="list-decimal list-inside grid grid-cols-1 md:grid-cols-3 gap-4">
+          <ol className="list-decimal list-inside grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <li className="flex flex-col items-center mb-2">
               <div className="text-3xl text-white font-bold rounded-full w-12 h-12 flex items-center justify-center bg-cyan-800 mb-2">
                 1
