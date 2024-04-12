@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UserContext } from "@/context/UserContext";
 import { useContext, useEffect, useState, useRef } from "react";
 import useAuth from "@/hooks/useAuth";
+import useToken from "@/hooks/useToken";
 import ConfirmationPopup from "@/components/ConfirmationPopup";
 
 const Navbar = () => {
@@ -12,10 +13,11 @@ const Navbar = () => {
 
   const userContext = useContext(UserContext);
   const { logout } = useAuth(userContext);
+  const { getRole } = useToken(userContext);
   const { user } = userContext;
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
+  const [profileLink, setProfileLink] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown visibility
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -32,8 +34,12 @@ const Navbar = () => {
   useEffect(() => {
     // Only attempt to set names if user data is available
     if (user) {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      const role = getRole();
+      role === "expert"
+        ? (setName(`${user.firstName} ${user.lastName}`),
+          setProfileLink("/expert/profile"))
+        : (setName(`${user.name} ${user.address}`),
+          setProfileLink("/insurance/profile"));
     }
   }, [user]); // Dependency on 'user' to update names when it changes
 
@@ -75,7 +81,7 @@ const Navbar = () => {
                 onClick={handleDropdownClick}
                 className="text-white relative z-10" // Add relative positioning and z-index to button
               >
-                {firstName + " " + lastName}
+                {name}
               </button>
               {isDropdownOpen && ( // Conditionally render dropdown menu
                 <div className="absolute bg-white rounded-md shadow-md mt-10 w-40 z-20">
@@ -85,7 +91,7 @@ const Navbar = () => {
                   >
                     <Link
                       className="block px-4 py-2 w-full hover:bg-gray-100 rounded-md"
-                      href="/expert/profile"
+                      href={profileLink}
                     >
                       My Profile
                     </Link>

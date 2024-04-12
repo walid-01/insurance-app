@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import CitySelect from "@/components/CitySelect";
@@ -7,13 +8,13 @@ export default function ExpertRegister() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [firstname, setFirstname] = useState("wa");
-  const [lastname, setLastname] = useState("lid");
-  const [userName, setUserName] = useState("walid");
-  const [password, setPassword] = useState("walid23");
-  const [confirmPassword, setConfirmPassword] = useState("walid23");
-  const [phoneNumber, setPhoneNumber] = useState(5);
-  const [address, setAddress] = useState("walid23");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
 
   const { expertRegister } = useAuth();
@@ -43,7 +44,7 @@ export default function ExpertRegister() {
       console.log(registerResponse);
       setError(registerResponse);
     } catch (error) {
-      console.log("Unkown login error:", error);
+      console.log("Unknown login error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -52,114 +53,84 @@ export default function ExpertRegister() {
   return (
     <>
       <h1 className="text-2xl font-semibold text-center mb-4">Register</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex justify-between">
-          <div className="flex flex-col">
-            <label htmlFor="RegisterFirstname" className="text-sm font-medium">
-              Firstname:
-            </label>
-            <input
-              required
-              type="text"
-              id="RegisterFirstname"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
-              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-            />
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
+        {error && (
+          <div className="text-red-800 bg-red-100 h-10 flex items-center justify-center">
+            <p className="text-sm">{error}</p>
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="RegisterLastname" className="text-sm font-medium">
-              Lastname:
-            </label>
-            <input
-              required
-              type="text"
-              id="RegisterLastname"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
-              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-            />
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterUserName" className="text-sm font-medium">
-            Username:
-          </label>
+        )}
+        <div className="flex justify-between w-full gap-4">
           <input
             required
             type="text"
-            id="RegisterUserName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            id="RegisterFirstname"
+            placeholder="Firstname"
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
+            className="rounded-md border w-1/2 border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterPassword" className="text-sm font-medium">
-            Password:
-          </label>
           <input
             required
-            type="password"
-            id="RegisterPassword"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            type="text"
+            id="RegisterLastname"
+            placeholder="Lastname"
+            value={lastname}
+            onChange={(e) => setLastname(e.target.value)}
+            className="rounded-md border w-1/2 border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="RegisterConfirmPassword"
-            className="text-sm font-medium"
-          >
-            Confirm Password:
-          </label>
+        <input
+          required
+          type="text"
+          id="RegisterUserName"
+          placeholder="Username"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+        />
+        <input
+          required
+          type="password"
+          id="RegisterPassword"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+        />
+        <input
+          required
+          type="password"
+          id="RegisterConfirmPassword"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+        />
+        <input
+          required
+          type="tel"
+          id="RegisterPhoneNumber"
+          placeholder="Phone Number"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+        />
+        <div className="flex justify-between w-full gap-4">
           <input
             required
-            type="password"
-            id="RegisterConfirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            type="text"
+            id="RegisterAddress"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="rounded-md border w-3/5 border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="RegisterPhoneNumber" className="text-sm font-medium">
-            Phone Number:
-          </label>
-          <input
-            required
-            type="tel"
-            id="RegisterPhoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+          <CitySelect
+            city={city}
+            setCity={setCity}
+            placeholder="City"
+            className="w-2/5"
           />
-        </div>
-        <div className="flex gap-3">
-          <div className="w-4/6 flex flex-col">
-            <label htmlFor="RegisterAddress" className="text-sm font-medium">
-              Address:
-            </label>
-            <input
-              required
-              type="text"
-              id="RegisterAddress"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
-            />
-          </div>
-          <div className="flex flex-col w-2/6">
-            <label htmlFor="RegisterCity" className="text-sm font-medium">
-              City:
-            </label>
-            <CitySelect
-              city={city}
-              setCity={setCity}
-              className="px-3 py-2 rounded-md border border-gray-300"
-            />
-          </div>
         </div>
         <button
           type="submit"
@@ -169,7 +140,6 @@ export default function ExpertRegister() {
           {isLoading ? "Loading..." : "Register"}
         </button>
       </form>
-      {/* {error && <p className="text-red-600 text-sm">{error}</p>} */}
     </>
   );
 }

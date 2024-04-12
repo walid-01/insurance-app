@@ -4,6 +4,7 @@ import useServiceOrder from "@/hooks/useServiceOrder";
 import { useState, useEffect } from "react";
 import ServiceOrderCard from "@/components/ServiceOrderCard";
 import useToken from "@/hooks/useToken";
+import ImageTitle from "./ImageTitle";
 
 export default function OrdersList() {
   const { getOrders } = useServiceOrder();
@@ -37,26 +38,34 @@ export default function OrdersList() {
 
   return (
     <>
-      <h1>Reports</h1>
+      <ImageTitle imgName="car-inspection.jpg" titleText="Reports" />
       <div>
-        <h1>Orders awaiting for reports</h1>
-        {awaitingOrders.length > 0 ? (
-          awaitingOrders.map((order) => (
-            <ServiceOrderCard order={order} role={role} />
-          ))
-        ) : (
-          <p>Nothing to show</p>
-        )}
+        <h1 className="text-2xl font-medium text-cyan-900 mb-5">
+          Orders Awaiting For Reports
+        </h1>
+        <div className="flex flex-col gap-6 mb-10">
+          {awaitingOrders.length > 0 ? (
+            awaitingOrders.map((order) => (
+              <ServiceOrderCard order={order} role={role} />
+            ))
+          ) : (
+            <p>Nothing to show</p>
+          )}
+        </div>
       </div>
       <div>
-        <h1>Finished Reports</h1>
-        {finishedOrders.length > 0 ? (
-          finishedOrders.map((order) => (
-            <ServiceOrderCard order={order} role={role} />
-          ))
-        ) : (
-          <p>Nothing to show</p>
-        )}
+        <h1 className="text-2xl font-medium text-cyan-900 mb-5">
+          Finished Reports
+        </h1>
+        <div className="flex flex-col gap-6 mb-8">
+          {finishedOrders.length > 0 ? (
+            finishedOrders.map((order) => (
+              <ServiceOrderCard order={order} role={role} />
+            ))
+          ) : (
+            <p>Nothing to show</p>
+          )}
+        </div>
       </div>
     </>
   );

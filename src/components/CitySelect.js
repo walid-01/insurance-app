@@ -8,7 +8,7 @@ const CitySelect = ({ city, setCity, isDisabled = false, className = "" }) => {
       id="city"
       value={city}
       onChange={(e) => setCity(e.target.value)}
-      className={className}
+      className={`rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 ${className}`}
     >
       <option value="" disabled>
         Select a city

@@ -1,43 +1,36 @@
 "use client";
 
 import { UserContext } from "@/context/UserContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Link from "next/link";
-import useAuth from "@/hooks/useAuth";
-import ConfirmationPopup from "@/components/ConfirmationPopup";
+import getRandomSalutation from "@/utils/RandomSalutation";
+import MostRecentReportCard from "@/components/MostRecentReportCard";
+import PlaceHolderCard from "@/components/PlaceHolderCard";
+import ImageTitle from "@/components/ImageTitle";
 
 export default function Expert() {
   const userContext = useContext(UserContext);
-  const { logout } = useAuth(userContext);
+  const { user } = userContext;
 
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-
-  const handleLogoutConfirm = () => {
-    setIsConfirmationOpen(false); // Close the popup
-    logout(); // Perform the logout
-  };
-
-  const handleLogoutCancel = () => {
-    setIsConfirmationOpen(false); // Close the popup
-  };
+  // Example usage:
+  const randomSalutation = getRandomSalutation();
 
   return (
     <>
-      <div>
-        <h1>Expert Home Page, Logged In</h1>
-        <Link href="/expert/profile">My Profile</Link>
-        <br />
-        <Link href="/expert/reports">Reports</Link>
-        <br />
-        <button onClick={() => setIsConfirmationOpen(true)}>Log Out</button>
+      <ImageTitle
+        imgName="2023-BMW-3-Series-6.png"
+        titleText={`${randomSalutation} ${user.firstName} ${user.lastName}!`}
+        // imgStyle=""
+        // titleStyle=""
+      />
+      <div className="grid grid-cols-2 gap-4">
+        <Link href="/expert/reports">
+          <MostRecentReportCard />
+        </Link>
+        <PlaceHolderCard />
+        <PlaceHolderCard />
+        <PlaceHolderCard />
       </div>
-      {isConfirmationOpen && (
-        <ConfirmationPopup
-          message="Are you sure you want to log out?"
-          onConfirm={handleLogoutConfirm}
-          onCancel={handleLogoutCancel}
-        />
-      )}
     </>
   );
 }

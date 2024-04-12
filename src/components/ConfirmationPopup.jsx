@@ -14,8 +14,18 @@ function ConfirmationPopup({ message, onConfirm, onCancel }) {
     >
       <div className="bg-white p-4 rounded-md shadow-md">
         <p>{message}</p>
-        <button onClick={onConfirm}>Confirm</button>
-        <button onClick={onCancel}>Cancel</button>
+        <button
+          className="py-1 px-2 rounded-md bg-green-500 font-medium"
+          onClick={onConfirm}
+        >
+          Confirm
+        </button>
+        <button
+          className="py-1 px-2 rounded-md bg-red-500 font-medium"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

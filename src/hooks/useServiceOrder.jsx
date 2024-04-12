@@ -21,7 +21,7 @@ export default function useServiceOrder() {
         // console.log(orders);
         return orders;
       } else {
-        throw new Error(`An error occurred ${response.status}`);
+        throw new Error(`An error occurred ${await response.text()}`);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -99,7 +99,7 @@ export default function useServiceOrder() {
       if (response.ok) {
         return true;
       } else {
-        throw new Error(`An error occurred ${response.status}`);
+        throw new Error(`An error occurred ${await response.text()}`);
       }
     } catch (error) {
       console.error("Error submiting service expertiseReport data:", error);
