@@ -3,6 +3,7 @@ import { useLayoutEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import ExpertiseReportForm from "@/components/ExpertiseReportForm";
 import useToken from "@/hooks/useToken";
+import { formatDate } from "@/utils/DateFormats";
 
 export default function OrderDetails({ params }) {
   const { getRole } = useToken();
@@ -37,7 +38,8 @@ export default function OrderDetails({ params }) {
         {order && (
           <div className="space-y-4">
             <p>
-              <span className="font-bold">Issue Date:</span> {order.issueDate}
+              <span className="font-bold">Issue Date:</span>{" "}
+              {formatDate(order.issueDate)}
             </p>
             <div className="w-full flex justify-between">
               <div className="w-1/2">
@@ -208,8 +210,8 @@ export default function OrderDetails({ params }) {
                       <div className="space-x-2">
                         <button
                           type="button"
-                          onClick={() => {
-                            reportRespond(order.expertiseReport.id, true);
+                          onClick={async () => {
+                            await reportRespond(order.expertiseReport.id, true);
                             loadOrderById();
                           }}
                           className="bg-green-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 hover:bg-green-600"
@@ -218,8 +220,11 @@ export default function OrderDetails({ params }) {
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            reportRespond(order.expertiseReport.id, false);
+                          onClick={async () => {
+                            await reportRespond(
+                              order.expertiseReport.id,
+                              false
+                            );
                             loadOrderById();
                           }}
                           className="bg-red-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600 hover:bg-red-600"

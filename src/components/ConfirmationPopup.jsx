@@ -13,19 +13,21 @@ function ConfirmationPopup({ message, onConfirm, onCancel }) {
       onClick={handleClickOutside}
     >
       <div className="bg-white p-4 rounded-md shadow-md">
-        <p>{message}</p>
-        <button
-          className="py-1 px-2 rounded-md bg-green-500 font-medium"
-          onClick={onConfirm}
-        >
-          Confirm
-        </button>
-        <button
-          className="py-1 px-2 rounded-md bg-red-500 font-medium"
-          onClick={onCancel}
-        >
-          Cancel
-        </button>
+        <p className="mb-3">{message}</p>
+        <div className="flex justify-end gap-2">
+          <button
+            className="py-1 px-2 rounded-md bg-red-500 text-white font-medium"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            className="py-1 px-2 rounded-md bg-green-500 text-white font-medium"
+            onClick={onConfirm}
+          >
+            Confirm
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -219,7 +219,6 @@ export default function ExpertEditProfile() {
           </button>
         )}
       </form>
-      {/* {error && <p className="text-red-600">{error}</p>} */}
     </>
   );
 }

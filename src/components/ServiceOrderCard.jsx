@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { formatDate } from "@/utils/DateFormats";
 
 export default function ServiceOrderCard({ order, role }) {
   return (
@@ -8,7 +9,7 @@ export default function ServiceOrderCard({ order, role }) {
         <div className="flex flex-col gap-1 w-full">
           <div className="flex gap-2">
             <p className="font-medium">Date: </p>
-            <p>{order.issueDate}</p>
+            <p>{formatDate(order.issueDate)}</p>
           </div>
           <div className="flex gap-2">
             <p className="font-medium">Car: </p>

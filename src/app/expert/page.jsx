@@ -12,7 +12,6 @@ export default function Expert() {
   const userContext = useContext(UserContext);
   const { user } = userContext;
 
-  // Example usage:
   const randomSalutation = getRandomSalutation();
 
   return (

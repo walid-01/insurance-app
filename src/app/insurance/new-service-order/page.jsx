@@ -11,7 +11,6 @@ const ReportForm = () => {
   const { submitOrder } = useServiceOrder();
 
   const router = useRouter();
-  // Individual state variables for each form field
   const [experts, setExperts] = useState([]);
   const [associatedExpertID, setAssociatedExpertID] = useState("");
   const [victimFullName, setVictimFullName] = useState("waa liid");
@@ -23,7 +22,6 @@ const ReportForm = () => {
   const [vehicleSeriesNumber, setVehicleSeriesNumber] = useState("IDK123456");
   const [vehicleGenre, setVehicleGenre] = useState("genre");
   const [vehicleWeight, setVehicleWeight] = useState("1500");
-  // const [vehicleColor, setVehicleColor] = useState("gris");
   const [atFaultExists, setAtFaultExists] = useState(false);
   const [insurances, setInsurances] = useState([]);
   const [atFaultInsurance, setAtFaultInsurance] = useState("");
@@ -61,7 +59,6 @@ const ReportForm = () => {
           vehicleSeriesNumber,
           vehicleGenre,
           vehicleWeight: parseInt(vehicleWeight),
-          // vehicleColor,
           atFaultInsuranceID: parseInt(atFaultInsurance),
           atFaultFullName,
           atFaultPolicyNumber,
@@ -78,7 +75,6 @@ const ReportForm = () => {
           vehicleSeriesNumber,
           vehicleGenre,
           vehicleWeight: parseInt(associatedExpertID),
-          // vehicleColor,
           atFaultInsuranceID: null,
           atFaultFullName: null,
           atFaultPolicyNumber: null,
@@ -87,7 +83,7 @@ const ReportForm = () => {
 
     const done = await submitOrder(obj);
     console.log(done);
-    if (done) router.push("/insurance");
+    if (done) router.push("/insurance/reports");
 
     // Reset form state after submission (optional)
     // setAssociatedExpertID("");
@@ -109,149 +105,131 @@ const ReportForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Accident Report Form</h2>
-      <div>
-        <label htmlFor="associatedExpertID">Associated Expert:</label>
-        <select
-          id="associatedExpertID"
-          name="associatedExpertID"
-          value={associatedExpertID}
-          onChange={(event) => setAssociatedExpertID(event.target.value)}
-          required
-        >
-          <option value="" disabled>
-            Select an expert
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 flex flex-col w-1/2 m-auto"
+    >
+      <h2 className="text-2xl font-semibold mb-4">Accident Report Form</h2>
+      <select
+        id="associatedExpertID"
+        name="associatedExpertID"
+        value={associatedExpertID}
+        onChange={(event) => setAssociatedExpertID(event.target.value)}
+        required
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      >
+        <option value="" disabled>
+          Select an expert
+        </option>
+        {experts.map((expert) => (
+          <option key={expert.id} value={expert.id}>
+            {`${expert.firstName} ${expert.lastName} ${expert.address}`}
           </option>
-          {experts.map((expert) => (
-            <option key={expert.id} value={expert.id}>
-              {`${expert.firstName} ${expert.lastName} ${expert.address}`}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="victimFullName">Victim Full Name:</label>
-        <input
-          required
-          type="text"
-          id="victimFullName"
-          name="victimFullName"
-          value={victimFullName}
-          onChange={(event) => setVictimFullName(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="victimPolicyNumber">Victim Policy Number:</label>
-        <input
-          required
-          type="text"
-          id="victimPolicyNumber"
-          name="victimPolicyNumber"
-          value={victimPolicyNumber}
-          onChange={(event) => setVictimPolicyNumber(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="victimCity">Victim City:</label>
-        <CitySelect city={victimCity} setCity={setVictimCity} />
-      </div>
-      <div>
-        <label htmlFor="vehicleMakerAndModel">Vehicle Maker and Model:</label>
-        <input
-          required
-          type="text"
-          id="vehicleMakerAndModel"
-          name="vehicleMakerAndModel"
-          value={vehicleMakerAndModel}
-          onChange={(event) => setVehicleMakerAndModel(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="vehicleLicensePlate">Vehicle License Plate:</label>
-        <input
-          required
-          type="text"
-          id="vehicleLicensePlate"
-          name="vehicleLicensePlate"
-          value={vehicleLicensePlate}
-          onChange={(event) => setVehicleLicensePlate(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="vehicleType">Vehicle Type:</label>
-        <input
-          required
-          type="text"
-          id="vehicleType"
-          name="vehicleType"
-          value={vehicleType}
-          onChange={(event) => setVehicleType(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="vehicleSeriesNumber">Vehicle Series Number:</label>
-        <input
-          required
-          type="text"
-          id="vehicleSeriesNumber"
-          name="vehicleSeriesNumber"
-          value={vehicleSeriesNumber}
-          onChange={(event) => setVehicleSeriesNumber(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="vehicleGenre">Vehicle Genre:</label>
-        <input
-          required
-          type="text"
-          id="vehicleGenre"
-          name="vehicleGenre"
-          value={vehicleGenre}
-          onChange={(event) => setVehicleGenre(event.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="vehicleWeight">Vehicle Weight:</label>
-        <input
-          required
-          type="number"
-          id="vehicleWeight"
-          name="vehicleWeight"
-          value={vehicleWeight}
-          onChange={(event) => setVehicleWeight(Number(event.target.value))}
-        />
-      </div>
-      {/* <div>
-        <label htmlFor="vehicleColor">Vehicle Color:</label>
-        <input
-          required
-          type="text"
-          id="vehicleColor"
-          name="vehicleColor"
-          value={vehicleColor}
-          onChange={(event) => setVehicleColor(event.target.value)}
-        />
-      </div> */}
+        ))}
+      </select>
+      <input
+        required
+        type="text"
+        id="victimFullName"
+        name="victimFullName"
+        value={victimFullName}
+        onChange={(event) => setVictimFullName(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+
+      <input
+        required
+        type="text"
+        id="victimPolicyNumber"
+        name="victimPolicyNumber"
+        value={victimPolicyNumber}
+        onChange={(event) => setVictimPolicyNumber(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <CitySelect city={victimCity} setCity={setVictimCity} />
+
+      <input
+        required
+        type="text"
+        id="vehicleMakerAndModel"
+        name="vehicleMakerAndModel"
+        value={vehicleMakerAndModel}
+        onChange={(event) => setVehicleMakerAndModel(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <input
+        required
+        type="text"
+        id="vehicleLicensePlate"
+        name="vehicleLicensePlate"
+        value={vehicleLicensePlate}
+        onChange={(event) => setVehicleLicensePlate(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <input
+        required
+        type="text"
+        id="vehicleType"
+        name="vehicleType"
+        value={vehicleType}
+        onChange={(event) => setVehicleType(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <input
+        required
+        type="text"
+        id="vehicleSeriesNumber"
+        name="vehicleSeriesNumber"
+        value={vehicleSeriesNumber}
+        onChange={(event) => setVehicleSeriesNumber(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <input
+        required
+        type="text"
+        id="vehicleGenre"
+        name="vehicleGenre"
+        value={vehicleGenre}
+        onChange={(event) => setVehicleGenre(event.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
+      <input
+        required
+        type="number"
+        id="vehicleWeight"
+        name="vehicleWeight"
+        value={vehicleWeight}
+        onChange={(event) => setVehicleWeight(Number(event.target.value))}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+      />
       <div>
         <input
           type="checkbox"
           id="atFaultExists"
           checked={atFaultExists}
           onChange={(event) => setAtFaultExists(event.target.checked)}
+          className="mr-2"
         />
-        <label htmlFor="atFaultExists">At-Fault Party Involved</label>
+        <label htmlFor="atFaultExists" className="text-lg font-medium">
+          At-Fault Party Involved
+        </label>
       </div>
       {atFaultExists && ( // Conditionally render these fields only if atFaultExists is true
         <>
-          <div>
-            <label htmlFor="atFaultInsurance">At-Fault Insurance:</label>
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="atFaultInsurance"
+              className="text-lg font-medium mb-2"
+            >
+              At-Fault Insurance:
+            </label>
             <select
               id="atFaultInsurance"
               name="atFaultInsurance"
               value={atFaultInsurance}
               onChange={(event) => setAtFaultInsurance(event.target.value)}
               required
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             >
               <option value="" disabled>
                 Select an insurance
@@ -263,8 +241,13 @@ const ReportForm = () => {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="atFaultFullName">At-Fault Full Name:</label>
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="atFaultFullName"
+              className="text-lg font-medium mb-2"
+            >
+              At-Fault Full Name:
+            </label>
             <input
               type="text"
               id="atFaultFullName"
@@ -272,10 +255,16 @@ const ReportForm = () => {
               value={atFaultFullName}
               onChange={(event) => setAtFaultFullName(event.target.value)}
               required
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
           </div>
-          <div>
-            <label htmlFor="atFaultPolicyNumber">At-Fault Policy Number:</label>
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="atFaultPolicyNumber"
+              className="text-lg font-medium mb-2"
+            >
+              At-Fault Policy Number:
+            </label>
             <input
               type="text"
               id="atFaultPolicyNumber"
@@ -283,15 +272,23 @@ const ReportForm = () => {
               value={atFaultPolicyNumber}
               onChange={(event) => setAtFaultPolicyNumber(event.target.value)}
               required
+              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
           </div>
-          <div>
-            <label htmlFor="atFaultCity">At-Fault City:</label>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="atFaultCity" className="text-lg font-medium mb-2">
+              At-Fault City:
+            </label>
             <CitySelect city={atFaultCity} setCity={setAtFaultCity} />
           </div>
         </>
       )}
-      <button type="submit">Submit Report</button>
+      <button
+        type="submit"
+        className="w-full bg-cyan-700 text-white py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-800 transition-colors duration-300 ease-in-out hover:bg-cyan-800"
+      >
+        Submit Report
+      </button>
     </form>
   );
 };

@@ -2,6 +2,7 @@
 
 import useServiceOrder from "@/hooks/useServiceOrder";
 import { useState, useEffect } from "react";
+import { formatDate } from "@/utils/DateFormats";
 
 const MostRecentReportCard = () => {
   const { getOrders } = useServiceOrder();
@@ -29,7 +30,7 @@ const MostRecentReportCard = () => {
             <div className="flex flex-col gap-4">
               <div className="w-full flex justify-between">
                 <h3 className="text-xl">Latest Report</h3>
-                <p>{latestOrder.issueDate}</p>
+                <p>{formatDate(latestOrder.issueDate)}</p>
               </div>
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex gap-2">
