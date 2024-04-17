@@ -4,6 +4,9 @@ import useToken from "@/hooks/useToken";
 import ServiceOrderCard from "@/components/ServiceOrderCard";
 import ImageTitle from "./ImageTitle";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
 export default function OrdersList() {
   const { getOrders } = useServiceOrder();
   const { getRole } = useToken();
@@ -114,13 +117,17 @@ export default function OrdersList() {
           )}
         </div>
         {/* Search input field */}
-        <div className="mb-4">
+        <div className="mb-4 relative h-fit">
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400"
+          />
           <input
             type="text"
             placeholder="Search For Cars"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            className="pl-10 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
       </div>

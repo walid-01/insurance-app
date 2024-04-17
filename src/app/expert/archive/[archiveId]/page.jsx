@@ -3,6 +3,7 @@ import useArchive from "@/hooks/useArchive";
 import { useLayoutEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/utils/DateFormats";
+import { formatCurrency } from "@/utils/CurrencyFormats";
 
 export default function ArchiveFilePage({ params }) {
   const { getArchiveById } = useArchive();
@@ -31,63 +32,99 @@ export default function ArchiveFilePage({ params }) {
         {file && (
           <div className="space-y-4">
             <p>
-              <span className="font-bold">Expert Name: </span>
+              <span className="font-bold text-lg text-cyan-900">
+                Expert Name:{" "}
+              </span>
               {file.expertName}
             </p>
             <div className="flex w-full justify-between">
               <p>
-                <span className="font-bold">Issue Date: </span>
+                <span className="font-bold text-lg text-cyan-900">
+                  Issue Date:{" "}
+                </span>
                 {formatDate(file.incidentDate)}
               </p>
               <p className="w-1/3">
-                <span className="font-bold">Reference: </span>
+                <span className="font-bold text-lg text-cyan-900">
+                  Reference:{" "}
+                </span>
                 {file.reference}
               </p>
             </div>
             <div className="w-full flex justify-between">
               <div className="w-1/3">
                 <div className="space-y-2 mb-4">
-                  <p className="font-bold">Victim Details:</p>
-                  <ul>
+                  <p className="font-bold text-lg text-cyan-900">
+                    Victim Details:
+                  </p>
+                  <ul className="flex flex-col gap-1">
                     <li>Full Name: {file.victimFullName}</li>
                     <li>Policy Number: {file.victimPolicyNumber}</li>
                     <li>Insurance Name: {file.victimInsuranceName}</li>
                     <li>Insurance Address: {file.victimInsuranceAddress}</li>
-                    <li>Insurance Code: {file.victimInsuranceCode}</li>
+                    <li>Agency Code: {file.victimInsuranceCode}</li>
                   </ul>
                 </div>
                 <div className="space-y-2">
-                  <p className="font-bold">At Fault Party Details:</p>
-                  <ul>
-                    <li>Full Name: {file.atFaultFullName}</li>
-                    <li>Policy Number: {file.atFaultPolicyNumber}</li>
-                    <li>Insurance Name: {file.atFaultInsuranceName}</li>
-                    <li>Insurance Code: {file.atFaultInsuranceCode}</li>
-                    <li>Insurance Address: {file.atFaultInsuranceAddress}</li>
+                  <p className="font-bold text-lg text-cyan-900">
+                    At Fault Party Details:{" "}
+                  </p>
+                  <ul className="flex flex-col gap-1">
+                    <li>
+                      Full Name:{" "}
+                      {file.atFaultFullName ? file.atFaultFullName : "//"}
+                    </li>
+                    <li>
+                      Policy Number:{" "}
+                      {file.atFaultPolicyNumber
+                        ? file.atFaultPolicyNumber
+                        : "//"}
+                    </li>
+                    <li>
+                      Insurance Name:{" "}
+                      {file.atFaultInsuranceName
+                        ? file.atFaultInsuranceName
+                        : "//"}
+                    </li>
+                    <li>
+                      Agency Code:{" "}
+                      {file.atFaultInsuranceCode
+                        ? file.atFaultInsuranceCode
+                        : "//"}
+                    </li>
+                    <li>
+                      Insurance Address:{" "}
+                      {file.atFaultInsuranceAddress
+                        ? file.atFaultInsuranceAddress
+                        : "//"}
+                    </li>
                   </ul>
                 </div>
               </div>
               <div className="space-y-2 w-1/3">
-                <p className="font-bold">Vehicle Details:</p>
-                <ul>
+                <p className="font-bold text-lg text-cyan-900">
+                  Vehicle Details:
+                </p>
+                <ul className="flex flex-col gap-1">
                   <li>Maker & Model: {file.vehicleMakerAndModel}</li>
                   <li>License Plate: {file.vehicleLicensePlate}</li>
                   <li>Type: {file.vehicleType}</li>
                   <li>Series Number: {file.vehicleSeriesNumber}</li>
                   <li>Genre: {file.vehicleGenre}</li>
-                  <li>Weight: {file.vehicleWeight}</li>
+                  <li>Weight: {file.vehicleWeight}Kg</li>
                 </ul>
               </div>
             </div>
             <div className="space-y-2">
-              <p className="font-bold">Damage Details:</p>
-              <ul>
+              <p className="font-bold text-lg text-cyan-900">Damage Details:</p>
+              <ul className="flex flex-col gap-1">
                 <li>
                   Vehicle Condition Before Incident:{" "}
                   {file.vehicleConditionBeforeIncident}
                 </li>
                 <li>Impact Point: {file.impactPoint}</li>
                 <li>Damaged Point: {file.damagedPoint}</li>
+                <li>Damaged Parts: </li>
                 <table className="w-full">
                   <thead>
                     <tr>
@@ -103,34 +140,54 @@ export default function ArchiveFilePage({ params }) {
                           {part.partName}
                         </td>
                         <td className="border border-gray-300 px-2 py-1">
-                          {part.partPrice}
+                          {formatCurrency(part.partPrice)}
                         </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          {part.isRepairable ? "Yes" : "No"}
-                        </td>
+                        {part.isRepairable ? (
+                          <td className="border border-gray-300 px-2 py-1 text-red-700">
+                            Yes
+                          </td>
+                        ) : (
+                          <td className="border border-gray-300 px-2 py-1 text-green-700">
+                            No
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <li>Paint and Additions Cost: {file.paintAndAdditions}</li>
-                <li>Labor Description: {file.laborDescription}</li>
-                <li>Labor Cost: {file.laborCost}</li>
-                <li>
-                  Damage Part Total Cost Before Reduction:{" "}
-                  {file.damagePartTotalCostBeforeReduction}
+                <li className="flex justify-between">
+                  <p>Damaged Parts Total Cost Before Reduction: </p>
+                  <p>
+                    {formatCurrency(file.damagePartTotalCostBeforeReduction)}
+                  </p>
                 </li>
-                <li>Reduction: {file.reduction}</li>
-                <li>
-                  Damage Part Total Reduction Cost:{" "}
-                  {file.damagePartTotalReductionCost}
+                <li className="flex justify-between">
+                  Reduction Percentage: {file.reduction}%
                 </li>
-                <li>
-                  Damage Part Total Cost After Reduction:{" "}
-                  {file.damagePartTotalCostAfterReduction}
+                <li className="flex justify-between">
+                  <p>Damaged Parts Total Reduction Cost: </p>
+                  <p>{formatCurrency(file.damagePartTotalReductionCost)}</p>
                 </li>
-                <li>
-                  <span className="font-bold">Total: </span>
-                  {file.total}
+                <li className="flex justify-between">
+                  <p>Damaged Parts Total Cost After Reduction: </p>
+                  <p>
+                    {formatCurrency(file.damagePartTotalCostAfterReduction)}
+                  </p>
+                </li>
+                <li className="flex justify-between">
+                  <p>Paint and Additions Cost: </p>
+                  <p>{formatCurrency(file.paintAndAdditions)}</p>
+                </li>
+                <li className="flex justify-between">
+                  Labor Description: {file.laborDescription}
+                </li>
+                <li className="flex justify-between">
+                  <p>Labor Cost: </p>
+                  <p>{formatCurrency(file.laborCost)}</p>
+                </li>
+                <li className="flex justify-between">
+                  <p className="font-bold text-lg">Total: </p>
+                  <p>{formatCurrency(file.total)}</p>
                 </li>
               </ul>
             </div>

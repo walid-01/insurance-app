@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ExpertiseReportForm from "@/components/ExpertiseReportForm";
 import useToken from "@/hooks/useToken";
 import { formatDate } from "@/utils/DateFormats";
+import { formatCurrency } from "@/utils/CurrencyFormats";
 
 export default function OrderDetails({ params }) {
   const { getRole } = useToken();
@@ -100,69 +101,99 @@ export default function OrderDetails({ params }) {
                     <li>Reference: {order.expertiseReport.reference}</li>
                     <li>Incident: {order.expertiseReport.incident}</li>
                     <li>
-                      Incident Date:
+                      Incident Date:{" "}
                       {new Date(
                         order.expertiseReport.incidentDate
                       ).toLocaleString()}
                     </li>
                     <li>
-                      Vehicle Condition Before Incident:
+                      Vehicle Condition Before Incident:{" "}
                       {order.expertiseReport.vehicleConditionBeforeIncident}
                     </li>
                     <li>Impact Point: {order.expertiseReport.impactPoint}</li>
                     <li>Damaged Point: {order.expertiseReport.damagedPoint}</li>
-                    <li>
-                      Paint and Additions Cost:
-                      {order.expertiseReport.paintAndAdditions}
+                    <table className="w-full">
+                      <thead>
+                        <tr>
+                          <th className="border border-gray-300">Part Name</th>
+                          <th className="border border-gray-300">Part Price</th>
+                          <th className="border border-gray-300">Repairable</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {order.expertiseReport.damagedParts.map(
+                          (part, index) => (
+                            <tr key={index} className="border border-gray-300">
+                              <td className="border border-gray-300 px-2 py-1">
+                                {part.partName}
+                              </td>
+                              <td className="border border-gray-300 px-2 py-1">
+                                {formatCurrency(part.partPrice)}
+                              </td>
+                              {part.isRepairable ? (
+                                <td className="border border-gray-300 px-2 py-1 text-green-700">
+                                  Yes
+                                </td>
+                              ) : (
+                                <td className="border border-gray-300 px-2 py-1 text-red-700">
+                                  No
+                                </td>
+                              )}
+                            </tr>
+                          )
+                        )}
+                      </tbody>
+                    </table>
+                    <li className="flex justify-between">
+                      <p>Damaged Parts Total Cost Before Reduction: </p>
+                      <p>
+                        {formatCurrency(
+                          order.expertiseReport
+                            .damagePartTotalCostBeforeReduction
+                        )}
+                      </p>
                     </li>
-                    <li>
-                      Labor Description:
+                    <li className="flex justify-between">
+                      Reduction Percentage: {order.expertiseReport.reduction}%
+                    </li>
+                    <li className="flex justify-between">
+                      <p>Damaged Parts Total Reduction Cost: </p>
+                      <p>
+                        {formatCurrency(
+                          order.expertiseReport.damagePartTotalReductionCost
+                        )}
+                      </p>
+                    </li>
+                    <li className="flex justify-between">
+                      <p>Damaged Parts Total Cost After Reduction: </p>
+                      <p>
+                        {formatCurrency(
+                          order.expertiseReport
+                            .damagePartTotalCostAfterReduction
+                        )}
+                      </p>
+                    </li>
+                    <li className="flex justify-between">
+                      <p>Paint and Additions Cost: </p>
+                      <p>
+                        {formatCurrency(
+                          order.expertiseReport.paintAndAdditions
+                        )}
+                      </p>
+                    </li>
+                    <li className="flex justify-between">
+                      Labor Description:{" "}
                       {order.expertiseReport.laborDescription}
                     </li>
-                    <li>Labor Cost: {order.expertiseReport.laborCost}</li>
-                    <li>
-                      Damaged Part Total Cost Before Reduction:
-                      {order.expertiseReport.damagePartTotalCostBeforeReduction}
+                    <li className="flex justify-between">
+                      <p>Labor Cost: </p>
+                      <p>{formatCurrency(order.expertiseReport.laborCost)}</p>
                     </li>
-                    <li>
-                      Damaged Part Total Percentage:
-                      {order.expertiseReport.reduction}%
+                    <li className="flex justify-between">
+                      <p className="font-bold text-lg">Total: </p>
+                      <p>{formatCurrency(order.expertiseReport.total)}</p>
                     </li>
-                    <li>
-                      Damaged Part Total Reduction Cost:
-                      {order.expertiseReport.damagePartTotalReductionCost}
-                    </li>
-                    <li>
-                      Damaged Part Total Cost After Reduction:
-                      {order.expertiseReport.damagePartTotalCostAfterReduction}
-                    </li>
-                    <li>Total Cost: {order.expertiseReport.total}</li>
                   </ul>
-                  <h3 className="font-bold">Damaged Parts</h3>
-                  <table className="w-full">
-                    <thead>
-                      <tr>
-                        <th className="border border-gray-300">Part Name</th>
-                        <th className="border border-gray-300">Part Price</th>
-                        <th className="border border-gray-300">Repairable</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {order.expertiseReport.damagedParts.map((part, index) => (
-                        <tr key={index} className="border border-gray-300">
-                          <td className="border border-gray-300 px-2 py-1">
-                            {part.partName}
-                          </td>
-                          <td className="border border-gray-300 px-2 py-1">
-                            {part.partPrice}
-                          </td>
-                          <td className="border border-gray-300 px-2 py-1">
-                            {part.isRepairable ? "Yes" : "No"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
                 </div>
                 {role === "insurance" ? (
                   <>
@@ -179,9 +210,6 @@ export default function OrderDetails({ params }) {
                         <li>
                           Phone Number: {order.associatedExpert.phoneNumber}
                         </li>
-                        {/* <li>
-                        City: {order.associatedExpert.city}
-                      </li> */}
                       </ul>
                     </div>
                     {order.expertiseReport.state === 0 ? (

@@ -75,7 +75,7 @@ const Navbar = () => {
                 <Link href={`/${role}`}>Home</Link>
               </button>
 
-              <div className="relative  flex justify-center" ref={dropdownRef}>
+              <div className="relative flex justify-center" ref={dropdownRef}>
                 <button
                   type="button"
                   onClick={handleDropdownClick}

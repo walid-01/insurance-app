@@ -6,8 +6,8 @@ import useAuth from "@/hooks/useAuth";
 export default function InsuranceLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userName, setUserName] = useState("saa");
-  const [password, setPassword] = useState("walid23");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
   const { insuranceLogin } = useAuth();
 
