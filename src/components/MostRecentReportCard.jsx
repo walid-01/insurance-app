@@ -22,7 +22,11 @@ const MostRecentReportCard = () => {
   }, []);
 
   return (
-    <div className="px-6 py-6 border-cyan-800 border-8 rounded-xl flex flex-col gap-2 w-full">
+    <div
+      className={`px-6 py-6 border-cyan-800 border-8 rounded-xl flex flex-col gap-2 w-full h-full ${
+        !latestOrder && "items-center justify-center"
+      }`}
+    >
       {!isLoading ? (
         latestOrder ? (
           <>
@@ -61,7 +65,7 @@ const MostRecentReportCard = () => {
             </div>
           </>
         ) : (
-          <h3 className="text-2xl hover:underline">Click to view all orders</h3>
+          <h3 className="text-2xl hover:underline">Orders & Reports</h3>
         )
       ) : (
         <>

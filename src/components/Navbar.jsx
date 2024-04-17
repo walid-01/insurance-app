@@ -17,7 +17,7 @@ const Navbar = () => {
   const { user } = userContext;
 
   const [name, setName] = useState("");
-  const [profileLink, setProfileLink] = useState("");
+  const [role, setRole] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown visibility
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
@@ -36,10 +36,8 @@ const Navbar = () => {
     if (user) {
       const role = getRole();
       role === "expert"
-        ? (setName(`${user.firstName} ${user.lastName}`),
-          setProfileLink("/expert/profile"))
-        : (setName(`${user.name} ${user.address}`),
-          setProfileLink("/insurance/profile"));
+        ? (setName(`${user.firstName} ${user.lastName}`), setRole(role))
+        : (setName(`${user.name} ${user.address}`), setRole(role));
     }
   }, [user]); // Dependency on 'user' to update names when it changes
 
@@ -72,48 +70,51 @@ const Navbar = () => {
             <Link href="/">AssuExpert</Link>
           </div>
           {user ? (
-            <div
-              className="relative w-40 flex justify-center"
-              ref={dropdownRef}
-            >
-              <button
-                type="button"
-                onClick={handleDropdownClick}
-                className="text-white relative z-10" // Add relative positioning and z-index to button
-              >
-                {name}
+            <div className="flex justify-between gap-12">
+              <button className="text-white" type="button">
+                <Link href={`/${role}`}>Home</Link>
               </button>
-              {isDropdownOpen && ( // Conditionally render dropdown menu
-                <div className="absolute bg-white rounded-md shadow-md mt-10 w-40 z-20">
-                  <button
-                    className="w-full"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <Link
-                      className="block px-4 py-2 w-full hover:bg-gray-100 rounded-md"
-                      href={profileLink}
+
+              <div className="relative  flex justify-center" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={handleDropdownClick}
+                  className="text-white relative" // Add relative positioning and z-index to button
+                >
+                  {name}
+                </button>
+                {isDropdownOpen && ( // Conditionally render dropdown menu
+                  <div className="absolute bg-white rounded-md shadow-md mt-10 w-40 z-20">
+                    <button
+                      className="w-full"
+                      onClick={() => setIsDropdownOpen(false)}
                     >
-                      My Profile
-                    </Link>
-                  </button>
-                  <button
-                    className="block px-4 py-2 w-full hover:bg-gray-100 rounded-md"
-                    onClick={() => {
-                      setIsConfirmationOpen(true);
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    Log Out
-                  </button>
-                </div>
-              )}
-              {isConfirmationOpen && (
-                <ConfirmationPopup
-                  message="Are you sure you want to log out?"
-                  onConfirm={handleLogoutConfirm}
-                  onCancel={handleLogoutCancel}
-                />
-              )}
+                      <Link
+                        className="block px-4 py-2 w-full hover:bg-gray-100 rounded-md"
+                        href={`/${role}/profile`}
+                      >
+                        My Profile
+                      </Link>
+                    </button>
+                    <button
+                      className="block px-4 py-2 w-full hover:bg-gray-100 rounded-md"
+                      onClick={() => {
+                        setIsConfirmationOpen(true);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
+                {isConfirmationOpen && (
+                  <ConfirmationPopup
+                    message="Are you sure you want to log out?"
+                    onConfirm={handleLogoutConfirm}
+                    onCancel={handleLogoutCancel}
+                  />
+                )}
+              </div>
             </div>
           ) : (
             <button type="button">

@@ -5,7 +5,6 @@ import { useContext } from "react";
 import Link from "next/link";
 import getRandomSalutation from "@/utils/RandomSalutation";
 import MostRecentReportCard from "@/components/MostRecentReportCard";
-import PlaceHolderCard from "@/components/PlaceHolderCard";
 import ImageTitle from "@/components/ImageTitle";
 
 export default function Insurance() {
@@ -31,8 +30,6 @@ export default function Insurance() {
         >
           <h2 className="text-2xl mb-4">Create New Order</h2>
         </Link>
-        {/* <PlaceHolderCard />
-        <PlaceHolderCard /> */}
       </div>
     </div>
   );

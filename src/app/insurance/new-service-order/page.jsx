@@ -202,27 +202,21 @@ const ReportForm = () => {
         onChange={(event) => setVehicleWeight(Number(event.target.value))}
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
-      <div>
-        <input
-          type="checkbox"
-          id="atFaultExists"
-          checked={atFaultExists}
-          onChange={(event) => setAtFaultExists(event.target.checked)}
-          className="mr-2"
-        />
-        <label htmlFor="atFaultExists" className="text-lg font-medium">
-          At-Fault Party Involved
-        </label>
-      </div>
-      {atFaultExists && ( // Conditionally render these fields only if atFaultExists is true
-        <>
-          <div className="flex flex-col mb-4">
-            <label
-              htmlFor="atFaultInsurance"
-              className="text-lg font-medium mb-2"
-            >
-              At-Fault Insurance:
-            </label>
+      <div className="flex flex-col gap-4 border border-gray-300 rounded-md p-6">
+        <div>
+          <input
+            type="checkbox"
+            id="atFaultExists"
+            checked={atFaultExists}
+            onChange={(event) => setAtFaultExists(event.target.checked)}
+            className="mr-2"
+          />
+          <label htmlFor="atFaultExists" className="text-lg font-medium">
+            At-Fault Party Involved
+          </label>
+        </div>
+        {atFaultExists && ( // Conditionally render these fields only if atFaultExists is true
+          <>
             <select
               id="atFaultInsurance"
               name="atFaultInsurance"
@@ -240,49 +234,30 @@ const ReportForm = () => {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="flex flex-col mb-4">
-            <label
-              htmlFor="atFaultFullName"
-              className="text-lg font-medium mb-2"
-            >
-              At-Fault Full Name:
-            </label>
             <input
+              required
               type="text"
               id="atFaultFullName"
               name="atFaultFullName"
               value={atFaultFullName}
               onChange={(event) => setAtFaultFullName(event.target.value)}
-              required
+              placeholder="At-Fault Full Name"
               className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
-          </div>
-          <div className="flex flex-col mb-4">
-            <label
-              htmlFor="atFaultPolicyNumber"
-              className="text-lg font-medium mb-2"
-            >
-              At-Fault Policy Number:
-            </label>
             <input
+              required
               type="text"
               id="atFaultPolicyNumber"
               name="atFaultPolicyNumber"
               value={atFaultPolicyNumber}
               onChange={(event) => setAtFaultPolicyNumber(event.target.value)}
-              required
+              placeholder="At-Fault Policy Number"
               className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
-          </div>
-          <div className="flex flex-col mb-4">
-            <label htmlFor="atFaultCity" className="text-lg font-medium mb-2">
-              At-Fault City:
-            </label>
             <CitySelect city={atFaultCity} setCity={setAtFaultCity} />
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
       <button
         type="submit"
         className="w-full bg-cyan-700 text-white py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-800 transition-colors duration-300 ease-in-out hover:bg-cyan-800"

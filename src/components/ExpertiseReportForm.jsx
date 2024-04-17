@@ -1,7 +1,7 @@
 import useServiceOrder from "@/hooks/useServiceOrder";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import ConfirmationPopup from "./ConfirmationPopup";
+import ConfirmationPopup from "@/components/ConfirmationPopup";
 
 function ExpertiseReportForm({ serviceOrderId }) {
   const { submitExpertiseReport } = useServiceOrder();
@@ -36,7 +36,7 @@ function ExpertiseReportForm({ serviceOrderId }) {
       {
         partName: "",
         partPrice: null,
-        expertiseReportID: null,
+        isRepairable: false,
       },
     ]);
   };
@@ -95,96 +95,105 @@ function ExpertiseReportForm({ serviceOrderId }) {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex w-full gap-4">
           <input
+            autoComplete="off"
             required
             type="text"
             id="reference"
             value={reference}
             onChange={(e) => setReference(e.target.value)}
             placeholder="Reference"
-            className="border border-gray-300 rounded-md p-2 w-1/4"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-1/4"
           />
           <input
+            autoComplete="off"
             required
             type="text"
             id="incident"
             value={incident}
             onChange={(e) => setIncident(e.target.value)}
             placeholder="Incident"
-            className="border border-gray-300 rounded-md p-2 w-3/4"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-3/4"
           />
         </div>
         <div className="flex flex-col">
           <label htmlFor="incidentDate">Incident Date</label>
           <input
+            autoComplete="off"
             required
             type="datetime-local"
             id="incidentDate"
             value={incidentDate.toISOString().slice(0, 16)} // Format for datetime-local input
             onChange={(e) => setIncidentDate(new Date(e.target.value))}
             placeholder="Incident Date"
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
         <div className="flex flex-col">
           <input
+            autoComplete="off"
             required
             type="text"
             id="vehicleConditionBeforeIncident"
             value={vehicleConditionBeforeIncident}
             onChange={(e) => setVehicleConditionBeforeIncident(e.target.value)}
             placeholder="Vehicle Condition Before Incident"
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
         <div className="flex w-full gap-4">
           <input
+            autoComplete="off"
             required
             type="text"
             id="impactPoint"
             value={impactPoint}
             onChange={(e) => setImpactPoint(e.target.value)}
             placeholder="Impact Point"
-            className="border border-gray-300 rounded-md p-2 w-1/2"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-1/2"
           />
           <input
+            autoComplete="off"
             required
             type="text"
             id="damagedPoint"
             value={damagedPoint}
             onChange={(e) => setDamagedPoint(e.target.value)}
             placeholder="Damaged Point"
-            className="border border-gray-300 rounded-md p-2 w-1/2"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-1/2"
           />
         </div>
         <div className="border border-gray-300 rounded-md p-6">
           <p className="mb-4 text-lg font-medium">Other</p>
           <div className="flex flex-col gap-4">
             <input
+              autoComplete="off"
               required
               type="number"
               id="paintAndAdditions"
               value={paintAndAdditions}
               onChange={(e) => setPaintAndAdditions(e.target.value)}
               placeholder="Paint & Additions Cost"
-              className="border border-gray-300 rounded-md p-2"
+              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
             <input
+              autoComplete="off"
               required
               type="text"
               id="laborDescription"
               value={laborDescription}
               onChange={(e) => setLaborDescription(e.target.value)}
               placeholder="Labor Description"
-              className="border border-gray-300 rounded-md p-2"
+              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
             <input
+              autoComplete="off"
               required
               type="number"
               id="laborCost"
               value={laborCost}
               onChange={(e) => setLaborCost(e.target.value)}
               placeholder="Labor Cost"
-              className="border border-gray-300 rounded-md p-2"
+              className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
             />
           </div>
         </div>
@@ -193,6 +202,7 @@ function ExpertiseReportForm({ serviceOrderId }) {
           {damagedParts.map((part, index) => (
             <div key={index} className="flex gap-4">
               <input
+                autoComplete="off"
                 required
                 type="text"
                 id={`partName${index}`}
@@ -205,9 +215,10 @@ function ExpertiseReportForm({ serviceOrderId }) {
                   )
                 }
                 placeholder="Part Name"
-                className="border border-gray-300 rounded-md p-2 w-1/2"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-1/2"
               />
               <input
+                autoComplete="off"
                 required
                 type="number"
                 id={`partPrice${index}`}
@@ -222,10 +233,11 @@ function ExpertiseReportForm({ serviceOrderId }) {
                   )
                 }
                 placeholder="Part Price"
-                className="border border-gray-300 rounded-md p-2 w-2/6"
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800 w-2/6"
               />
               <div className="w-1/6 flex items-center justify-center gap-2">
                 <input
+                  autoComplete="off"
                   type="checkbox"
                   id={`isRepairable${index}`}
                   checked={part.isRepairable}
@@ -238,7 +250,7 @@ function ExpertiseReportForm({ serviceOrderId }) {
                       )
                     )
                   }
-                  className="border border-gray-300 rounded-md p-2"
+                  className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
                 />
                 <label htmlFor={`isRepairable${index}`}>Repairable?</label>
               </div>
@@ -264,13 +276,25 @@ function ExpertiseReportForm({ serviceOrderId }) {
         <div className="flex justify-between items-center">
           <label htmlFor="reduction">Car Reduction in Value Percentage</label>
           <input
+            autoComplete="off"
             required
             type="number"
             id="reduction"
             value={reduction}
-            onChange={(e) => setReduction(e.target.value)}
-            placeholder="Reduction"
-            className="border border-gray-300 rounded-md p-2"
+            onChange={(e) => {
+              // setReduction(e.target.value);
+              const inputValue = e.target.value;
+
+              // Check if the input value is empty or a valid number between 0 and 100
+              if (
+                inputValue === "" ||
+                (Number(inputValue) >= 0 && Number(inputValue) <= 100)
+              ) {
+                setReduction(inputValue);
+              }
+            }}
+            placeholder="[0-100] %"
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
           />
         </div>
         <button

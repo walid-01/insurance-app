@@ -8,6 +8,18 @@ export default function ServiceOrderCard({ order, role }) {
       <Link href={`/${role}/reports/${order.id}`}>
         <div className="flex flex-col gap-1 w-full">
           <div className="flex gap-2">
+            <p className="font-medium">State: </p>
+            <p>
+              {!order.expertiseReport
+                ? "Awaiting Expertise Report"
+                : order.expertiseReport.state === 0
+                ? "Awaiting Insurance Response"
+                : order.expertiseReport.state === 1
+                ? "Accepted By Insurance"
+                : "Rejected By Insurance"}
+            </p>
+          </div>
+          <div className="flex gap-2">
             <p className="font-medium">Date: </p>
             <p>{formatDate(order.issueDate)}</p>
           </div>
