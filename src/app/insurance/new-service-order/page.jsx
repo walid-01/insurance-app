@@ -13,15 +13,15 @@ const ReportForm = () => {
   const router = useRouter();
   const [experts, setExperts] = useState([]);
   const [associatedExpertID, setAssociatedExpertID] = useState("");
-  const [victimFullName, setVictimFullName] = useState("waa liid");
-  const [victimPolicyNumber, setVictimPolicyNumber] = useState("500");
+  const [victimFullName, setVictimFullName] = useState("");
+  const [victimPolicyNumber, setVictimPolicyNumber] = useState("");
   const [victimCity, setVictimCity] = useState("");
-  const [vehicleMakerAndModel, setVehicleMakerAndModel] = useState("VW up");
-  const [vehicleLicensePlate, setVehicleLicensePlate] = useState("1234511523");
-  const [vehicleType, setVehicleType] = useState("type");
-  const [vehicleSeriesNumber, setVehicleSeriesNumber] = useState("IDK123456");
-  const [vehicleGenre, setVehicleGenre] = useState("genre");
-  const [vehicleWeight, setVehicleWeight] = useState("1500");
+  const [vehicleMakerAndModel, setVehicleMakerAndModel] = useState("");
+  const [vehicleLicensePlate, setVehicleLicensePlate] = useState("");
+  const [vehicleType, setVehicleType] = useState("");
+  const [vehicleSeriesNumber, setVehicleSeriesNumber] = useState("");
+  const [vehicleGenre, setVehicleGenre] = useState("");
+  const [vehicleWeight, setVehicleWeight] = useState("");
   const [atFaultExists, setAtFaultExists] = useState(false);
   const [insurances, setInsurances] = useState([]);
   const [atFaultInsurance, setAtFaultInsurance] = useState("");
@@ -84,24 +84,6 @@ const ReportForm = () => {
     const done = await submitOrder(obj);
     console.log(done);
     if (done) router.push("/insurance/reports");
-
-    // Reset form state after submission (optional)
-    // setAssociatedExpertID("");
-    // setVictimFullName("");
-    // setVictimPolicyNumber("");
-    // setVictimCity("");
-    // setVehicleMakerAndModel("");
-    // setVehicleLicensePlate("");
-    // setVehicleType("");
-    // setVehicleSeriesNumber("");
-    // setVehicleGenre("");
-    // setVehicleWeight("");
-    // setVehicleColor("");
-    // setAtFaultExists(false);
-    // setAtFaultInsurance("");
-    // setAtFaultFullName("");
-    // setAtFaultPolicyNumber("");
-    // setAtFaultCity("");
   };
 
   return (
@@ -128,6 +110,7 @@ const ReportForm = () => {
         ))}
       </select>
       <input
+        placeholder="Victim's Full Name"
         required
         type="text"
         id="victimFullName"
@@ -138,6 +121,7 @@ const ReportForm = () => {
       />
 
       <input
+        placeholder="Victim's Policy Number"
         required
         type="text"
         id="victimPolicyNumber"
@@ -149,6 +133,7 @@ const ReportForm = () => {
       <CitySelect city={victimCity} setCity={setVictimCity} />
 
       <input
+        placeholder="Vehicle Maker and Model"
         required
         type="text"
         id="vehicleMakerAndModel"
@@ -158,6 +143,7 @@ const ReportForm = () => {
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
       <input
+        placeholder="Vehicle License Plate"
         required
         type="text"
         id="vehicleLicensePlate"
@@ -167,6 +153,7 @@ const ReportForm = () => {
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
       <input
+        placeholder="Vehicle Type"
         required
         type="text"
         id="vehicleType"
@@ -176,6 +163,7 @@ const ReportForm = () => {
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
       <input
+        placeholder="Vehicle Series Number"
         required
         type="text"
         id="vehicleSeriesNumber"
@@ -185,6 +173,7 @@ const ReportForm = () => {
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
       <input
+        placeholder="Vehicle Genre"
         required
         type="text"
         id="vehicleGenre"
@@ -194,6 +183,7 @@ const ReportForm = () => {
         className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
       />
       <input
+        placeholder="Vehicle Weight (KG)"
         required
         type="number"
         id="vehicleWeight"

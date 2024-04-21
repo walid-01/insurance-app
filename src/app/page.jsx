@@ -29,11 +29,11 @@ export default function Home() {
           <section className="px-12 py-10 bg-white border-cyan-800 border-8 rounded-xl">
             <h2 className="text-3xl font-bold mb-4">About Us</h2>
             <p className="text-gray-700">
-              At AssuExpert, we're dedicated to revolutionizing the way auto
-              insurance claims are processed. With a deep understanding of the
-              industry's challenges, we've created a platform that fosters
-              seamless collaboration between insurance companies and expert
-              professionals.
+              At AssuExpert, we&apos;re dedicated to revolutionizing the way
+              auto insurance claims are processed. With a deep understanding of
+              the industry&apos;s challenges, we&apos;ve created a platform that
+              fosters seamless collaboration between insurance companies and
+              expert professionals.
             </p>
           </section>
 
@@ -84,9 +84,9 @@ export default function Home() {
               </div>
               <p className="text-gray-700">
                 The expert meticulously evaluates the damage, noting the
-                vehicle's condition before and after the incident. They include
-                details about parts that need repair or replacement, as well as
-                any other pertinent information.
+                vehicle&apos;s condition before and after the incident. They
+                include details about parts that need repair or replacement, as
+                well as any other pertinent information.
               </p>
             </li>
             <li className="flex flex-col items-center mb-2">

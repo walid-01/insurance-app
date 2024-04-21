@@ -19,7 +19,6 @@ export default function InsuranceLogin() {
     try {
       const result = await insuranceLogin(userName, password);
       console.log(result);
-      setError(result);
     } catch (err) {
       console.log("Unkown login error:", err);
       setError("Unkown login error:" + err);

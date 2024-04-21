@@ -38,7 +38,6 @@ export default function InsuranceRegister() {
         parseInt(agencyCode)
       );
 
-      setError(registerResponse);
       // console.log(registerResponse);
     } catch (error) {
       console.log("Unkown login error:", error);

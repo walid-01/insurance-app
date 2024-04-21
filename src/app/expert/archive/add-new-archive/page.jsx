@@ -76,6 +76,10 @@ function AddArchiveForm() {
     setIsConfirmationOpen(true);
   };
 
+  const handleKeyDown = (e) => {
+    e.preventDefault();
+  };
+
   const handleConfirm = async () => {
     setIsConfirmationOpen(false);
 
@@ -157,6 +161,7 @@ function AddArchiveForm() {
             onChange={(e) => setIncidentDate(new Date(e.target.value))}
             placeholder="Incident Date"
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-cyan-800"
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="flex flex-col gap-4 border border-gray-300 rounded-md p-6">
@@ -186,7 +191,7 @@ function AddArchiveForm() {
           </div>
           <div className="flex flex-col gap-4">
             <p className="text-md font-medium border-b">
-              Victim's Insurance Information
+              Victim&apos;s Insurance Information
             </p>
             <input
               required
@@ -223,7 +228,7 @@ function AddArchiveForm() {
           </div>
           <div className="flex flex-col gap-4">
             <p className="text-md font-medium border-b">
-              Victim's Vehicle Information
+              Victim&apos;s Vehicle Information
             </p>
 
             <input

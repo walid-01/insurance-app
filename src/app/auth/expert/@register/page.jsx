@@ -42,7 +42,6 @@ export default function ExpertRegister() {
       );
 
       console.log(registerResponse);
-      setError(registerResponse);
     } catch (error) {
       console.log("Unknown login error:", error);
     } finally {
