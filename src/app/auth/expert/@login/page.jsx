@@ -19,6 +19,7 @@ export default function ExpertLogin() {
     try {
       const result = await expertLogin(userName, password);
       console.log(result);
+      setError(result);
     } catch (err) {
       console.log("Unknown login error:", err);
       setError("Unknown login error:" + err);

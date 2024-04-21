@@ -28,7 +28,7 @@ export default function useAuth() {
       document.cookie = `token=${data.token}; expires=${date}; path=/`;
 
       fetchUserData();
-      return "Logged In";
+      return;
     } catch (err) {
       console.log(err);
     }
